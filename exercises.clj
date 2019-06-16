@@ -121,16 +121,13 @@ reduce +
 (fn [coll] 
   (if (string? coll)
     (if (= coll (reduce (fn [x y] (str y x)) "" coll)) true false)
-    (if (= coll (reduce (fn [x y] (conj x y)) '() coll)) true false)
-  ))
+    (if (= coll (reduce (fn [x y] (conj x y)) '() coll)) true false)))
 
 ; 41. Fibonacci Sequence
 (fn [x] 
   (loop [i 0 fib 1 fib2 1 result [1]] 
     (if (= i (- x 1)) (seq result) 
-      (recur (+ i 1) fib2 (+ fib fib2) (conj result fib2)))
-    )
-  )
+      (recur (+ i 1) fib2 (+ fib fib2) (conj result fib2)))))
 
 ; 42. Maximum value
 (fn [& args]
@@ -140,9 +137,7 @@ reduce +
       (recur (inc i)
              (if (< result (nth args i))
                (nth args i)
-               result))
-      ))
-  )
+               result)))))
 
 ; 43. Get the Caps
 (fn [string]
@@ -153,9 +148,47 @@ reduce +
        x)
      )
    ""
-   string
-   )
-  )
+   string))
+
+; 44. Duplicate a Sequence
+(fn [coll] 
+  (seq (reduce (fn [x y] (conj x y y)) [] coll)))
+
+; 45. Intro to some
+6
+
+; 46. Compress a Sequence
+(fn [x]
+  (loop [i 0 result []]
+    (if (= i (count x))
+      (seq result)
+      (recur (inc i)
+             (if (= i 0)
+               (conj result (get x i))
+               (if (= (get x i) (get result (dec (count result))))
+                 result
+                 (conj result (get x i))))))))
+
+; 47. Implement range
+(fn [start end]
+  (loop [i start result []]
+    (if (= i end)
+      (seq result)
+      (recur (inc i) (conj result i)))))
+
+; 48. Factorial Fun
+(fn [n]
+  (loop [i n result 1]
+    (if (= i 1)
+      result
+      (recur (dec i) (* result i)))))
+
+; 49. Interleave Two Seqs
+(fn [x y]
+  (loop [i 0 result []]
+    (if (or (= i (count x)) (= i (count y)))
+      (seq result)
+      (recur (inc i) (conj result (get x i) (get y i))))))
 
 
 
