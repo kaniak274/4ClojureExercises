@@ -70,21 +70,92 @@ true
 '(5 4 3 2 1)
 
 ; 24. Rearranging Code
+last
 
+; 25. Recurring Theme
+[7 6 5 4 3]
 
+; 26. Rearranging Code: ->>
+reduce +
 
+; 27. A nil key
+(fn [key dct] (and (contains? dct key) (not (get dct key))))
 
+; 28. For the win
+'(1 5 9 13 17 21 25 29 33 37)
 
+; 29. Logical falsity and truth
+1
 
+; 30. Intro to Destructuring
+[c e]
 
+; 31. Subset and Superset
+#{1 2}
 
+; 32. Map Defaults
+(fn [default keys] (reduce (fn [x y] (assoc x y default)) {} keys))
 
+; 33. Last Element
+(fn [x] (nth (seq x) (- (count x) 1)))
 
+; 34. Penultimate Element
+(fn [x] (nth (seq x) (- (count x) 2)))
 
+; 35. Nth Element
+(fn [x y] (last (take (+ y 1) x)))
 
+; 36. Count a Sequence
+(fn [coll] (reduce (fn [x y] (+ 1 x)) 0 coll))
 
+; 37. Sum It All Up
+(fn [x] (reduce + x))
 
+; 38. Find the odd numbers
+(fn [x] (filter odd? x))
 
+; 39. Reverse a Sequence
+(fn [coll] (reduce (fn [x y] (conj x y)) '() coll))
+
+; 40. Palindrome Detector
+(fn [coll] 
+  (if (string? coll)
+    (if (= coll (reduce (fn [x y] (str y x)) "" coll)) true false)
+    (if (= coll (reduce (fn [x y] (conj x y)) '() coll)) true false)
+  ))
+
+; 41. Fibonacci Sequence
+(fn [x] 
+  (loop [i 0 fib 1 fib2 1 result [1]] 
+    (if (= i (- x 1)) (seq result) 
+      (recur (+ i 1) fib2 (+ fib fib2) (conj result fib2)))
+    )
+  )
+
+; 42. Maximum value
+(fn [& args]
+  (loop [i 0 result 0]
+    (if (= i (dec (count args)))
+      result
+      (recur (inc i)
+             (if (< result (nth args i))
+               (nth args i)
+               result))
+      ))
+  )
+
+; 43. Get the Caps
+(fn [string]
+  (reduce
+   (fn [x y]
+     (if (re-find #"[A-Z]" (str y))
+       (str x y)
+       x)
+     )
+   ""
+   string
+   )
+  )
 
 
 
