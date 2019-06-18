@@ -190,13 +190,32 @@ reduce +
       (seq result)
       (recur (inc i) (conj result (get x i) (get y i))))))
 
+; 50. Flatten
 
+; 51. Replicate a Sequence
+(fn [coll n] (loop [i 0 result []]
+  (if (= i (count coll))
+    (seq result)
+    (recur (inc i)
+           (loop [j 0 result2 result]
+             (if (= j n)
+               result2
+               (recur (inc j) (conj result2 (get coll i)))))))))
 
+; 52. Intro to Iterate
+'(1 4 7 10 13)
 
+; 53. Contain Yourself
+4
 
+; 54. Interpose a Seq
+(fn [separator coll]
+  (loop [i 0 result []]
+    (if (= i (dec (count coll)))
+      (seq (conj result (get coll i)))
+      (recur (inc i) (conj result (get coll i) separator)))))
 
-
-
+; 55. Pack a Sequence
 
 
 
