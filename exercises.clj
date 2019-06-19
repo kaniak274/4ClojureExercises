@@ -145,8 +145,7 @@ reduce +
    (fn [x y]
      (if (re-find #"[A-Z]" (str y))
        (str x y)
-       x)
-     )
+       x))
    ""
    string))
 
@@ -216,6 +215,83 @@ reduce +
       (recur (inc i) (conj result (get coll i) separator)))))
 
 ; 55. Pack a Sequence
+
+; 56. Drop Every Nth Item
+(fn [coll n]
+  (loop [i 0 result []]
+    (if (= i (count coll))
+      (seq result)
+      (recur (inc i)
+             (if (= (rem (inc i) n) 0)
+               result
+               (conj result (get coll i)))))))
+
+; 57. Split a sequence
+(fn [n coll]
+  (loop [i 0 part1 [] part2 []]
+    (if (= i (count coll))
+      (seq (conj [] part1 part2))
+      (recur (inc i)
+             (if (>= i n)
+               part1
+               (conj part1 (get coll i)))
+             (if (>= i n)
+               (conj part2 (get coll i))
+               part2)))))
+
+; 58. Advanced Destructuring
+[1 2 3 4 5]
+
+; 59. A Half-Truth
+(fn [& args]
+  (if (every? true? args)
+    false
+    (if (some true? args)
+      true
+      false)))
+
+
+; 60. Map Construction
+(fn [coll1 coll2]
+  (loop [i 0 result {}]
+    (if (or (= i (count coll1)) (= i (count coll2)))
+      result
+      (recur (inc i) (assoc result (get coll1 i) (get coll2 i))))))
+
+; 61. Greatest Common Divisor
+
+
+; 62. Set Intersection
+(fn [set1 set2]
+  (set (reduce
+    (fn [x y]
+      (if (contains? set2 y) (conj x y) x))
+    []
+    set1)))
+
+; 63. Simple closures
+(fn [n]
+  (fn [x]
+    (if (= n 0)
+      1
+      (loop [i n result x]
+      (if (= i 1)
+        result
+        (recur (dec i) (* result x)))))))
+
+; 64. Re-implement Iterate
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
