@@ -142,10 +142,7 @@ reduce +
 ; 43. Get the Caps
 (fn [string]
   (reduce
-   (fn [x y]
-     (if (re-find #"[A-Z]" (str y))
-       (str x y)
-       x))
+    (fn [x y] (if (re-find #"[A-Z]" (str y)) (str x y) x))
    ""
    string))
 
@@ -232,12 +229,8 @@ reduce +
     (if (= i (count coll))
       (seq (conj [] part1 part2))
       (recur (inc i)
-             (if (>= i n)
-               part1
-               (conj part1 (get coll i)))
-             (if (>= i n)
-               (conj part2 (get coll i))
-               part2)))))
+             (if (>= i n) part1 (conj part1 (get coll i)))
+             (if (>= i n) (conj part2 (get coll i)) part2)))))
 
 ; 58. Advanced Destructuring
 [1 2 3 4 5]
@@ -269,8 +262,7 @@ reduce +
 ; 62. Set Intersection
 (fn [set1 set2]
   (set (reduce
-    (fn [x y]
-      (if (contains? set2 y) (conj x y) x))
+    (fn [x y] (if (contains? set2 y) (conj x y) x))
     []
     set1)))
 
@@ -280,9 +272,7 @@ reduce +
     (if (= n 0)
       1
       (loop [i n result x]
-      (if (= i 1)
-        result
-        (recur (dec i) (* result x)))))))
+      (if (= i 1) result (recur (dec i) (* result x)))))))
 
 ; 64. Re-implement Iterate
 
@@ -299,20 +289,14 @@ reduce +
     (apply concat
            (reduce
              (fn [x y]
-               (conj x
-                     (reduce
-                       (fn [l n]
-                         (conj l [n y]))
-                       []
-                       set1)))
+               (conj x (reduce (fn [l n] (conj l [n y])) [] set1)))
              #{}
              set2))))
 
 ; 67. Product Digits
 (fn [a b]
   (reduce
-    (fn [x y]
-      (conj x y))
+    (fn [x y] (conj x y))
     []
     (map (fn [n] (read-string (str n))) (str (* a b)))))
 
@@ -357,10 +341,37 @@ reduce +
           (recur (inc i) result number)
           (recur (inc i) (conj result (Math/pow 2 i)) number))))))))
 
-; 72. 
+; 72. Through the Looking Class
+Class
 
+; 73. Infix Calculator
 
+; 74. Indexing Sequences
+(fn [coll]
+  (loop [i 0 result []]
+    (if (= i (count coll))
+      (seq result)
+      (recur (inc i) (conj result [(get coll i) i])))))
 
+; 75. Pascal's Triangle
+(fn [row]
+  (get
+    (loop [i 1 result []]
+      (if (= i (inc row))
+        result
+        (recur (inc i)
+               (conj result (loop [column 0 result2 []]
+                              (if (= column i)
+                                result2
+                                (recur (inc column)
+                                       (if (or (= column 0) (= column (- i 1)))
+                                         (conj result2 1)
+                                         (conj result2
+                                               (+ (get (get result (- i 2)) column)
+                                                  (get (get result (- i 2)) (dec column))))))))))))
+    (dec row)))
+
+; 76. Re-implement Map
 
 
 
