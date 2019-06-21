@@ -259,7 +259,12 @@ reduce +
       (recur (inc i) (assoc result (get coll1 i) (get coll2 i))))))
 
 ; 61. Greatest Common Divisor
-
+(fn [a b]
+  (loop [a a b b]
+    (cond
+      (= a 0) b
+      (= b 0) a
+      :else (recur b (rem a b)))))
 
 ; 62. Set Intersection
 (fn [set1 set2]
@@ -281,18 +286,78 @@ reduce +
 
 ; 64. Re-implement Iterate
 
+; 65. Comparisons
+(fn [operator a b]
+  (cond
+    (operator a b) :lt
+    (operator b a) :gt
+    :else :eq))
 
+; 66. Cartesian Product
+(fn [set1 set2]
+  (set
+    (apply concat
+           (reduce
+             (fn [x y]
+               (conj x
+                     (reduce
+                       (fn [l n]
+                         (conj l [n y]))
+                       []
+                       set1)))
+             #{}
+             set2))))
 
+; 67. Product Digits
+(fn [a b]
+  (reduce
+    (fn [x y]
+      (conj x y))
+    []
+    (map (fn [n] (read-string (str n))) (str (* a b)))))
 
+; 68. Group a Sequence
+(fn [f s]
+  (reduce
+    (fn [x y]
+      (let [result (f y)]
+        (if (get x result)
+          (assoc-in x [result] (conj (get x result) y))
+          (assoc x result [y]))))
+    {}
+    s))
 
+; 69. Symmetric Difference
+(fn [set1 set2]
+  (if (= (count set1) 0)
+    set2
+    (reduce
+      (fn [x y]
+        (if (contains? x y)
+          (disj x y)
+          (conj x y)))
+      set2
+      set1)))
 
+; 70. dot product
+(fn [coll1 coll2]
+  (reduce + (loop [i 0 result []]
+    (if (= i (count coll1))
+      result
+      (recur (inc i) (conj result (* (get coll1 i) (get coll2 i))))))))
 
+; 71. Read a binary number
+(fn [number]
+  (if (= 0 (read-string number))
+    0
+    (int (reduce + (loop [i 0 result [] number (reverse number)]
+      (if (= i (count number))
+        result
+        (if (= (str (nth number i)) "0")
+          (recur (inc i) result number)
+          (recur (inc i) (conj result (Math/pow 2 i)) number))))))))
 
-
-
-
-
-
+; 72. 
 
 
 
