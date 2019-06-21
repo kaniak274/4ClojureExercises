@@ -375,6 +375,8 @@ Class
 
 
 
-
+; Reverse Interleave
+(fn [n coll]
+  (apply map vector (partition coll n)))
 
 
