@@ -372,6 +372,10 @@ Class
     (dec row)))
 
 ; 76. Re-implement Map
+(fn new-map [f coll]
+  (if (empty? coll)
+    coll
+    (lazy-seq (cons (f (first coll)) (new-map f (rest coll))))))
 
 
 
