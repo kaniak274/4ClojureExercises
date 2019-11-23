@@ -4,6 +4,8 @@
 
 (def choices '["x" "y" "z"])
 
+(def vector_length 16)
+
 (def input_letter '[[1 0 0 1] [0 1 1 0] [0 1 1 0] [1 0 0 1]])
 
 (defn zip [x y] (vec (map vector x y)))
@@ -15,7 +17,7 @@
 
 (defn calc_weights []
   (partition
-    16
+    vector_length
     (flatten
       (map-indexed
         (fn [idx, letter]
